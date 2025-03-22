@@ -2,8 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app/app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Logger } from 'nestjs-pino';
-import { useSwagger } from './documentation/swagger.config';
 import { ValidationPipe } from '@nestjs/common';
+import { useSwagger } from './configs/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { bufferLogs: true });
@@ -22,6 +22,7 @@ async function bootstrap() {
 
   useSwagger(app);
 
-  await app.listen(Number(process.env.PORT));
+  await app.listen(Number(process.env.PORT), '0.0.0.0');
+  console.log(`🟢 Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

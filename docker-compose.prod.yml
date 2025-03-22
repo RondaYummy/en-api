@@ -5,13 +5,13 @@ services:
       dockerfile: Dockerfile.prod
     container_name: nest_prod
     ports:
-      - "3000:3000"
+      - "${PORT}:3000"
     env_file:
       - .env
     depends_on:
       - postgres
       - redis
-      - mongodb
+      # - mongodb
 
   postgres:
     image: postgres:17
@@ -24,7 +24,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - pgdata_prod:/var/lib/postgresql/data
 
@@ -33,25 +33,25 @@ services:
     container_name: redis_prod
     restart: always
     ports:
-      - "6380:6379"
+      - "6379:6379"
     volumes:
       - redisdata_prod:/data
 
-  mongodb:
-    image: mongo:8
-    container_name: mongo_prod
-    restart: always
-    env_file:
-      - .env
-    environment:
-      MONGO_USER: ${MONGO_USER}
-      MONGO_PASS: ${MONGO_PASS}
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodata_prod:/data/db
+  # mongodb:
+  #   image: mongo:8
+  #   container_name: mongo_prod
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     MONGO_USER: ${MONGO_USER}
+  #     MONGO_PASS: ${MONGO_PASS}
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodata_prod:/data/db
 
 volumes:
   pgdata_prod:
   redisdata_prod:
-  mongodata_prod:
+  # mongodata_prod:

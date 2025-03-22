@@ -14,13 +14,13 @@ export class AuthController {
 
   @Post('register')
   register(@Body() createUserDto: RegisterDto) {
-    this.logger.log('New registration');
+    this.logger.log('New registration', createUserDto.username);
     return this.authService.register(createUserDto);
   }
 
   @Post('login')
   login(@Body() loginUserDto: LoginDto) {
-    this.logger.log('New log in');
+    this.logger.log('New log in', loginUserDto.username);
     return this.authService.login(loginUserDto);
   }
 }

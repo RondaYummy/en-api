@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: nest_dev
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
     volumes:
       - ./:/app
       - /app/node_modules
@@ -14,7 +14,7 @@ services:
     depends_on:
       - postgres
       - redis
-      - mongodb
+      # - mongodb
 
   postgres:
     image: postgres:17
@@ -38,20 +38,20 @@ services:
     volumes:
       - redisdata_dev:/data
 
-  mongodb:
-    image: mongo:8
-    container_name: mongo_dev
-    env_file:
-      - .env
-    environment:
-      MONGO_USER: ${MONGO_USER}
-      MONGO_PASS: ${MONGO_PASS}
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodata_dev:/data/db
+  # mongodb:
+  #   image: mongo:8
+  #   container_name: mongo_dev
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     MONGO_USER: ${MONGO_USER}
+  #     MONGO_PASS: ${MONGO_PASS}
+  #   ports:
+  #     - "27018:27017"
+  #   volumes:
+  #     - mongodata_dev:/data/db
 
 volumes:
   pgdata_dev:
   redisdata_dev:
-  mongodata_dev:
+  # mongodata_dev:
