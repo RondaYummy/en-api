@@ -1,4 +1,4 @@
-# ---------- ЕТАП 1 (build) ----------
+# ---------- STEEP 1 (build) ----------
 FROM node:22 as builder
 
 WORKDIR /app
@@ -10,7 +10,7 @@ COPY . .
 
 RUN npm run build
 
-# ---------- ЕТАП 2 (run) ----------
+# ---------- STEEP 2 (run) ----------
 FROM node:22 as runner
 
 WORKDIR /app
@@ -18,7 +18,6 @@ WORKDIR /app
 # Копіюємо node_modules з builder (але можна використовувати npm ci --production)
 COPY --from=builder /app/node_modules ./node_modules
 
-# Копіюємо зібрані JS-файли
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000

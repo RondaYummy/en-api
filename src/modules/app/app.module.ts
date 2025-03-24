@@ -8,7 +8,7 @@ import { CoursesModule } from '../courses/courses.module';
 import { OpenAiModule } from '../open-ai/open-ai.module';
 import { SpeechModule } from '../speech/speech.module';
 import { UsersModule } from '../users/users.module';
-import { DrizzleModule } from 'src/drizzle/drizzle.module';
+import { DrizzleModule } from 'src/modules/drizzle/drizzle.module';
 
 @Module({
   imports: [

@@ -8,12 +8,6 @@ RUN npm install
 
 COPY . .
 
-# (Опційно) Якщо хочете збирати TypeScript у контейнері – можна.
-# Але частіше для dev хочуть динамічний reload через nodemon, тому
-# зазвичай достатньо просто:
-# RUN npm run build
-
 EXPOSE 3000
 
-# 8. Запускаємо додаток у режимі dev (hot-reload, або nodemon)
 CMD ["npm", "run", "start:dev"]

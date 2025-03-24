@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { eq, and, isNull } from 'drizzle-orm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Drizzle, InjectDrizzle } from 'src/drizzle/drizzle.module';
+import { Drizzle, InjectDrizzle } from 'src/modules/drizzle/drizzle.module';
 import { users } from './entities/users.schema';
 
 @Injectable()

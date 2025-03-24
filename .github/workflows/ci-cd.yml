@@ -1,0 +1,61 @@
+# name: Node.js CI/CD
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+
+# jobs:
+#   pre_deploy:
+#     runs-on: ubuntu-latest
+#     name: Run Lint and tests
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           ref: ${{ github.ref }}
+#       - name: Use Node.js 22
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 22.x
+#       - name: Install Dependencies
+#         run: npm ci
+
+#       - name: Notify on failure
+#         if: failure()
+#         uses: appleboy/telegram-action@master
+#         with:
+#           to: ${{ secrets.TELEGRAM_TO }}
+#           token: ${{ secrets.TELEGRAM_TOKEN }}
+#           format: markdown
+#           message: |
+#             Deployment error message.
+#             Event: *${{ github.event_name }}*
+#             Branch: *${{ github.ref_name }}*
+#             Author: *${{ github.actor }}*
+#             Commit message: *${{ github.event.commits[0].message }}*
+#             Repository: *${{ github.repository }}*
+#             Job: *${{ github.job }}*
+
+#             See changes: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+#   deploy:
+#     if: github.event_name == 'push'
+#     runs-on: ubuntu-latest
+#     needs: pre_deploy
+#     name: Deploy to Production
+
+#     steps:
+#       - name: Deploy to Production Server
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.HOST }}
+#           username: ${{ secrets.USERNAME }}
+#           key: ${{ secrets.PRIVATE_KEY }}
+#           port: 22
+#           script: |
+#             cd ~/crocodile_bot/
+#             git pull origin main
+#             nvm use 22
+#             npm i
+#             npm run migration:run
+#             npm run build
+#             pm2 reload ecosystem.config.js
