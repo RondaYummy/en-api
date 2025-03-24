@@ -3,11 +3,11 @@ import { IsEmail, IsString, IsStrongPassword, Length } from 'class-validator';
 export class RegisterDto {
   @IsString()
   @Length(1, 64)
-  firstName: string;
+  first_name: string;
 
   @IsString()
   @Length(1, 64)
-  lastName: string;
+  last_name: string;
 
   @IsString()
   @Length(8, 32)

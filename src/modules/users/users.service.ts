@@ -16,6 +16,10 @@ export class UsersService {
     return this.usersRepository.find(findUserDto.userId);
   }
 
+  findCredentials(username: string) {
+    return this.usersRepository.findCredentials(username);
+  }
+
   update(userId: string, updateUserDto: UpdateUserDto) {
     return this.usersRepository.update(userId, updateUserDto);
   }
