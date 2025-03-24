@@ -36,8 +36,10 @@ export class AuthService {
     if (session) {
       return session;
     }
-    // const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    const oneHour = 60 * 60 * 1000;
+    const oneMonth = oneHour * 24 * 30;
+    const expiresAt = new Date(Date.now() + oneMonth);
+
     return await this.userSessionsRepository.create({
       user_id: userCredentials.user_id,
       session_token: token,

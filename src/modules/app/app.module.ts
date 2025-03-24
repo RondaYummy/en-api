@@ -10,6 +10,7 @@ import { SpeechModule } from '../speech/speech.module';
 import { UsersModule } from '../users/users.module';
 import { DrizzleModule } from 'src/modules/drizzle/drizzle.module';
 import { AppController } from './app.controller';
+import { ChatsModule } from '../chats/chats.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AppController } from './app.controller';
     OpenAiModule,
     SpeechModule,
     UsersModule,
+    ChatsModule,
   ],
   controllers: [AppController],
   providers: [],
