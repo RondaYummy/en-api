@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsDateString,
   Length,
+  IsArray,
 } from 'class-validator';
 
 export class UserSessionDto {
@@ -42,5 +43,8 @@ export class UserSessionDto {
   @IsOptional()
   @IsDateString()
   updated_at?: Date | null;
+
+  @IsArray()
+  permissions: string[];
 }
 

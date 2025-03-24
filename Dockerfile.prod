@@ -15,7 +15,7 @@ FROM node:22 as runner
 
 WORKDIR /app
 
-# Копіюємо node_modules з builder (але можна використовувати npm ci --production)
+# Copy node_modules from builder (but you can also use npm ci --production)
 COPY --from=builder /app/node_modules ./node_modules
 
 COPY --from=builder /app/dist ./dist

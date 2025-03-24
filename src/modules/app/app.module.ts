@@ -9,6 +9,7 @@ import { OpenAiModule } from '../open-ai/open-ai.module';
 import { SpeechModule } from '../speech/speech.module';
 import { UsersModule } from '../users/users.module';
 import { DrizzleModule } from 'src/modules/drizzle/drizzle.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { DrizzleModule } from 'src/modules/drizzle/drizzle.module';
     SpeechModule,
     UsersModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule { }

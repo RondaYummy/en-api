@@ -8,6 +8,6 @@ import { UserSessionsRepository } from './user_sessions.repository';
   imports: [UsersModule],
   providers: [AuthService, UserSessionsRepository],
   controllers: [AuthController],
-  exports: [AuthService],
+  exports: [AuthService, UserSessionsRepository],
 })
 export class AuthModule { }

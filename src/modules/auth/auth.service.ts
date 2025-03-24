@@ -32,14 +32,21 @@ export class AuthService {
     const userCredentials = await this.usersService.findCredentials(loginDto.username);
     if (!userCredentials) throw new UnauthorizedException();
     const token = randomBytes(64).toString('hex');
-
+    const session = await this.userSessionsRepository.findByIp(ip);
+    if (session) {
+      return session;
+    }
+    // const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
     return await this.userSessionsRepository.create({
       user_id: userCredentials.user_id,
       session_token: token,
       ip_address: ip,
       is_active: true,
       user_agent: userAgent,
-      expires_at: null, // TODO add expires_at
+      expires_at: expiresAt,
+      permissions: ['all'],
     });
   }
 }
+

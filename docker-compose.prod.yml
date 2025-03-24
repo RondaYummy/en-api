@@ -1,11 +1,12 @@
 services:
   nest:
+    command: sh -c "npx drizzle-kit migrate && npm run start:prod"
     build:
       context: .
       dockerfile: Dockerfile.prod
     container_name: nest_prod
     ports:
-      - "${PORT}:3000"
+      - "${PORT}:${PORT}"
     env_file:
       - .env
     depends_on:
@@ -19,9 +20,9 @@ services:
     env_file:
       - .env
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      DATABASE_URL: ${DATABASE_URL}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_DATABASE: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:

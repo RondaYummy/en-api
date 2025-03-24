@@ -1,4 +1,4 @@
-CREATE TABLE "user_sessions" (
+CREATE TABLE IF NOT EXISTS "user_sessions" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid NOT NULL,
 	"session_token" varchar(128) NOT NULL,
@@ -8,10 +8,11 @@ CREATE TABLE "user_sessions" (
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone,
 	"expires_at" timestamp with time zone,
+	"permissions" text[] NOT NULL DEFAULT '{}'::text[],
 	CONSTRAINT "user_sessions_session_token_unique" UNIQUE("session_token")
 );
 --> statement-breakpoint
-CREATE TABLE "users" (
+CREATE TABLE IF NOT EXISTS "users" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"first_name" varchar(64) NOT NULL,
 	"last_name" varchar(64) NOT NULL,
