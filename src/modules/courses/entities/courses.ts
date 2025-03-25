@@ -8,6 +8,7 @@ export const courses = pgTable('courses', {
   questions: text('questions').array().notNull(), // Array of ribbons for questions
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   status: varchar('status', { length: 32 }).notNull(), // Course status (active, completed, draft, etc.)
+  user_lang: varchar('lang', { length: 32 }).notNull(), // User language (for example, “en”, “uk”)
   lang: varchar('lang', { length: 32 }).notNull(), // Course language (for example, “en”, “uk”)
   level: varchar('level', { length: 32 }).notNull(), // Course level (beginner, intermediate, advanced)
   available_days: integer('available_days').array().notNull() // Array of numbers (days of the week) when the task is available

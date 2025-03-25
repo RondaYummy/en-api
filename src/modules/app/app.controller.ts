@@ -47,8 +47,8 @@ export class AppController {
     console.group('Application Info');
     console.log(`APP WORKS ON PORT: ${port}`);
     console.group('Uptime & Start Time');
-    console.log(`Uptime: ${formattedUptime}`);
     console.log(`Started: ${startTime}`);
+    console.log(`Uptime: ${formattedUptime}`);
     console.groupEnd();
 
     console.group('Memory');
@@ -71,11 +71,12 @@ export class AppController {
     console.groupEnd(); // Application Info group end
 
     return `APP WORKS ON PORT: ${port}
-Uptime: ${formattedUptime}
 Started: ${startTime}
+Uptime: ${formattedUptime}
 
 T Memory: ${osObj.totalMemory}
 F Memory: ${osObj.freeMemory}
+U Memory: ${((os.totalmem() - os.freemem()) / 1073741824).toFixed(1) + ' GB'}
 
 Memory Usage:
   rss: ${formattedMemoryUsage.rss}
