@@ -28,7 +28,7 @@ CREATE TABLE "courses" (
 	"user_id" uuid NOT NULL,
 	"title" varchar(32) NOT NULL,
 	"description" varchar(128) NOT NULL,
-	"questions" text[] NOT NULL,
+	"questions" jsonb NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"status" varchar(32) NOT NULL,
 	"user_lang" varchar(32) NOT NULL,

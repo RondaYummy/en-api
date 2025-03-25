@@ -1,5 +1,5 @@
 {
-  "id": "3200f00e-151f-4280-bb6f-fbaaca609dc6",
+  "id": "6c1d9637-a253-48dd-ac19-cf8894913418",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -184,7 +184,7 @@
         },
         "questions": {
           "name": "questions",
-          "type": "text[]",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": true
         },

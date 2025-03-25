@@ -31,8 +31,7 @@ The course should last for ${months} month(s) with ${lessonsPerWeek} lesson(s) p
 
 For each lesson, provide:
 - A clear lesson title and lesson number.
-- A detailed lesson overview that explains what the student will learn.
-- A set of interactive tasks that include precise instructions for what the student should do (for example, read a provided dialogue, record an audio, or write a short text). Include all necessary content (such as the dialogue or text to read) so that the student can perform the task without additional resources.
+- A detailed lesson plan that explains what the student will learn and what interactive tasks they should perform. Include all necessary content (e.g., a dialogue to read, text to analyze, or instructions for a recording) so that the student can complete the tasks without additional resources.
 - A control question at the end of the lesson that the student must answer to confirm they have understood the material.
 
 Output the entire course plan in plain text format, using clear headings and bullet points for each lesson.
@@ -65,8 +64,8 @@ Output the entire course plan in plain text format, using clear headings and bul
           parsedCoursePlan.lessons && parsedCoursePlan.lessons.length
             ? parsedCoursePlan.lessons[0].title
             : 'Untitled Course',
-        description: 'coursePlanText', // TODO
-        questions: parsedCoursePlan.lessons.map((lesson: any) => lesson.controlQuestion),
+        description: coursePlanText,
+        questions: parsedCoursePlan.lessons.map((lesson: any) => lesson.questions),
         available_days: available_days,
         lang: targetLanguage,
         level: level,
@@ -91,8 +90,10 @@ Output the entire course plan in plain text format, using clear headings and bul
     interface Lesson {
       lessonHeader: string;
       title: string;
-      overview: string;
-      controlQuestion: string;
+      questions: {
+        plan: string;
+        controlQuestion: string;
+      };
     }
     const lessons: Lesson[] = [];
     let currentLesson: Lesson | null = null;
@@ -106,12 +107,12 @@ Output the entire course plan in plain text format, using clear headings and bul
         const parts = trimmedLine.split(':');
         const header = parts[0].trim();
         const title = parts[1] ? parts[1].trim() : '';
-        currentLesson = { lessonHeader: header, title, overview: '', controlQuestion: '' };
+        currentLesson = { lessonHeader: header, title, questions: { plan: '', controlQuestion: '' } };
       } else if (currentLesson) {
         if (/^Control Question[:\-]/i.test(trimmedLine)) {
-          currentLesson.controlQuestion = trimmedLine.replace(/^Control Question[:\-]\s*/i, '');
+          currentLesson.questions.controlQuestion = trimmedLine.replace(/^Control Question[:\-]\s*/i, '');
         } else {
-          currentLesson.overview += trimmedLine + ' ';
+          currentLesson.questions.plan += trimmedLine + ' ';
         }
       }
     }
