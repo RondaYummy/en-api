@@ -11,11 +11,6 @@ export class CreateCourseDto {
   @IsString()
   description: string;
 
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsString({ each: true })
-  questions: string[];
-
   @IsString()
   status: string;
 
@@ -39,4 +34,4 @@ export class CreateCourseDto {
   month: number;
 }
 
-export class CreateApiCourseDto extends OmitType(CreateCourseDto, ['title', 'status', 'description', 'questions'] as const) { }
+export class CreateApiCourseDto extends OmitType(CreateCourseDto, ['title', 'status', 'description'] as const) { }

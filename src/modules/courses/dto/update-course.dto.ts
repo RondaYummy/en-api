@@ -14,11 +14,6 @@ export class UpdateCourseDto {
   description?: string;
 
   @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  questions?: string[];
-
-  @IsOptional()
   @IsString()
   status?: string;
 

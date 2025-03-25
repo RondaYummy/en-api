@@ -1,8 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseUUIDPipe, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
 import { CreateApiCourseDto } from './dto/create-course.dto';
 import { Permissions } from 'src/decorators/session-permissions.decorator';
+import { UserId } from '../../decorators/user-id.decorator';
 
 @ApiTags('Courses')
 @Controller('courses')
@@ -11,13 +12,19 @@ export class CoursesController {
 
   @Post('create')
   @Permissions()
-  async createCourse(@Body() createCourseDto: CreateApiCourseDto) {
-    return await this.coursesService.createCourse(createCourseDto);
+  async createCourse(@UserId() userId: string, @Body() createCourseDto: CreateApiCourseDto) {
+    return await this.coursesService.createCourse(createCourseDto, userId);
   }
 
-  @Post()
+  @Get()
   @Permissions()
-  async getUserCourse() {
-    return await this.coursesService.getUserCourse();
+  async getUserCourse(@UserId() userId: string) {
+    return await this.coursesService.findCoursesWithLessons(userId);
+  }
+
+  @Get('/:courseId/lessons')
+  @Permissions()
+  async getUserCourseLessons(@UserId() userId: string, @Param('courseId', ParseUUIDPipe) courseId: string) {
+    return await this.coursesService.findLessonsByCourse(courseId, userId);
   }
 }
