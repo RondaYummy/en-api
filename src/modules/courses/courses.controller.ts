@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
-import { CreateCourseDto } from './dto/create-course.dto';
+import { CreateApiCourseDto, CreateCourseDto } from './dto/create-course.dto';
 import { Permissions } from 'src/decorators/session-permissions.decorator.ts';
 
 @ApiTags('Courses')
@@ -11,7 +11,13 @@ export class CoursesController {
 
   @Post('create')
   @Permissions()
-  async createCourse(@Body() createCourseDto: CreateCourseDto) {
+  async createCourse(@Body() createCourseDto: CreateApiCourseDto) {
     return await this.coursesService.createCourse(createCourseDto);
+  }
+
+  @Post()
+  @Permissions()
+  async getUserCourse() {
+    return await this.coursesService.getUserCourse();
   }
 }

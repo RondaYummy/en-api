@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Drizzle, InjectDrizzle } from '../drizzle/drizzle.module';
-import { userSessions } from './entities/user_sessions';
+import { userSessions } from './entities/user_sessions.schema';
 import { UserSessionDto } from './dto/user_session.dto';
 import { and, eq } from 'drizzle-orm';
 
