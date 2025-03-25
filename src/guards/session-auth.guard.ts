@@ -19,6 +19,7 @@ export class AuthGuard implements CanActivate {
     }
 
     const session = await this.sessionsRepo.findByToken(sessionToken);
+    session?.user_id;
     if (!session || !session.is_active || (session.expires_at && session.expires_at < new Date())) {
       await this.sessionsRepo.deactivateSession(sessionToken);
       throw new UnauthorizedException('Invalid or inactive session');
@@ -35,6 +36,7 @@ export class AuthGuard implements CanActivate {
       }
     }
 
+    request.user = { id: session.user_id };
     return true;
   }
 }

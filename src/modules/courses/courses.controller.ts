@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CoursesService } from './courses.service';
-import { CreateApiCourseDto, CreateCourseDto } from './dto/create-course.dto';
-import { Permissions } from 'src/decorators/session-permissions.decorator.ts';
+import { CreateApiCourseDto } from './dto/create-course.dto';
+import { Permissions } from 'src/decorators/session-permissions.decorator';
 
 @ApiTags('Courses')
 @Controller('courses')

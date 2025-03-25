@@ -1,7 +1,7 @@
 import { Controller, Get, Header } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
-import { Permissions } from 'src/decorators/session-permissions.decorator.ts';
+import { Permissions } from 'src/decorators/session-permissions.decorator';
 import * as os from 'os';
 
 @ApiTags('App')
