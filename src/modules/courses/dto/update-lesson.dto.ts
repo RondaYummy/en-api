@@ -1,4 +1,5 @@
-import { IsUUID, IsString, IsOptional, MaxLength, IsNumber, IsNotEmpty } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsUUID, IsString, IsOptional, MaxLength, IsNumber, IsNotEmpty, IsDate } from 'class-validator';
 
 export class UpdateLessonDto {
   @IsOptional()
@@ -37,4 +38,9 @@ export class UpdateLessonDto {
   @IsString()
   @MaxLength(255)
   controlQuestion?: string;
+
+  @Type(() => Date)
+  @IsDate()
+  @IsNotEmpty()
+  scheduled_date: Date;
 }

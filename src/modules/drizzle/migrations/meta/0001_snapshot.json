@@ -1,6 +1,6 @@
 {
-  "id": "35d581a4-3c06-4d70-afbf-111f437a766d",
-  "prevId": "4c055bfa-6042-49ff-90c9-8032d1a4222a",
+  "id": "be661907-b898-4798-8260-9c694a2f2aea",
+  "prevId": "5ba75f10-890f-4a7e-803f-54a406cf419d",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -237,12 +237,24 @@
           "notNull": true,
           "default": false
         },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "scheduled_date": {
+          "name": "scheduled_date",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},

@@ -17,7 +17,7 @@ CREATE TABLE "courses" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid NOT NULL,
 	"title" varchar(64) NOT NULL,
-	"description" varchar(256) NOT NULL,
+	"description" varchar(512) NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"status" varchar(32) NOT NULL,
 	"user_lang" varchar(32) NOT NULL,
@@ -37,7 +37,8 @@ CREATE TABLE "lessons" (
 	"review" varchar(510) NOT NULL,
 	"controlQuestion" varchar(255) NOT NULL,
 	"done" boolean DEFAULT false NOT NULL,
-	"created_at" timestamp with time zone DEFAULT now() NOT NULL
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"scheduled_date" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "payments" (

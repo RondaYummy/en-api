@@ -20,12 +20,20 @@ export class CoursesRepository {
     return insertedCourse;
   }
 
-  async findCourse(userId: string) {
+  async findCourses(userId: string) {
     const result = await this.db
       .select()
       .from(courses)
       .where(eq(courses.user_id, userId));
-    return result[0];
+    return result;
+  }
+
+  async findCourse(userId: string, courseId: string) {
+    const result = await this.db
+      .select()
+      .from(courses)
+      .where(and(eq(lessons.course_id, courseId), eq(lessons.user_id, userId)));
+    return result;
   }
 
   async findCoursesWithLessons(userId: string) {
@@ -47,12 +55,12 @@ export class CoursesRepository {
     return coursesWithLessons;
   }
 
-  async updateCourse(userId: string, updateUserDto: UpdateCourseDto) {
+  async updateCours(userId: string, updateUserDto: UpdateCourseDto) {
     await this.db
       .update(courses)
       .set(updateUserDto)
       .where(eq(courses.user_id, userId));
-    return this.findCourse(userId);
+    return this.findCourses(userId);
   }
 
   async createLesson(createLessonDto: CreateLessonDto) {
@@ -71,19 +79,19 @@ export class CoursesRepository {
     return result;
   }
 
-  async findLessonById(lessonId: string) {
+  async findLessonById(lessonId: string, userId: string) {
     const result = await this.db
       .select()
       .from(lessons)
-      .where(eq(lessons.id, lessonId));
+      .where(and(eq(lessons.id, lessonId), eq(lessons.user_id, userId)));
     return result[0];
   }
 
-  async updateLesson(lessonId: string, updateLessonDto: UpdateLessonDto) {
+  async updateLesson(lessonId: string, updateLessonDto: UpdateLessonDto, userId: string) {
     await this.db
       .update(lessons)
       .set(updateLessonDto)
       .where(eq(lessons.id, lessonId));
-    return this.findLessonById(lessonId);
+    return this.findLessonById(lessonId, userId);
   }
 }

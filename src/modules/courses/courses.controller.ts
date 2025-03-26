@@ -27,4 +27,24 @@ export class CoursesController {
   async getUserCourseLessons(@UserId() userId: string, @Param('courseId', ParseUUIDPipe) courseId: string) {
     return await this.coursesService.findLessonsByCourse(courseId, userId);
   }
+
+  @Post('/:courseId/lessons/:lessonId')
+  @Permissions()
+  async answerLessonQuestion(
+    @UserId() userId: string,
+    @Param('courseId', ParseUUIDPipe) courseId: string,
+    @Param('lessonId', ParseUUIDPipe) lessonId: string,
+  ) {
+    return await this.coursesService.answerLessonQuestion(courseId, userId, lessonId);
+  }
+
+  @Post('/:courseId/lessons/:lessonId/content')
+  @Permissions()
+  async createLessonContent(
+    @UserId() userId: string,
+    @Param('courseId', ParseUUIDPipe) courseId: string,
+    @Param('lessonId', ParseUUIDPipe) lessonId: string,
+  ) {
+    return await this.coursesService.createLessonContent(courseId, userId, lessonId);
+  }
 }
