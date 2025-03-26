@@ -1,5 +1,5 @@
 import { Body, Controller, Logger, Post, Req, Res } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiBody, ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
@@ -14,12 +14,20 @@ export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
   @Post('register')
+  @ApiOperation({ summary: 'User Registration', description: 'Registers a new user with the provided details.' })
+  @ApiResponse({ status: 201, description: 'User registered successfully.' })
+  @ApiResponse({ status: 400, description: 'Bad request.' })
+  @ApiBody({ type: RegisterDto })
   async register(@Body() createUserDto: RegisterDto) {
     this.logger.log('New registration', createUserDto.username);
     return this.authService.register(createUserDto);
   }
 
   @Post('login')
+  @ApiOperation({ summary: 'User Login', description: 'Authenticates a user and sets a session cookie on successful login.' })
+  @ApiResponse({ status: 200, description: 'Login successful, session cookie set.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiBody({ type: LoginDto })
   async login(@Body() loginUserDto: LoginDto, @Req() req: Request, @Res({ passthrough: true }) res: Response) {
     let ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     const userAgent = req.headers['user-agent'];

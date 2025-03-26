@@ -10,7 +10,7 @@ export const lessons = pgTable('lessons', {
   plan: varchar('plan', { length: 510 }).notNull(),
   lesson_number: integer('lesson_number').notNull(),
   answer: varchar('answer', { length: 510 }).notNull(), // user responses
-  review: varchar('review', { length: 510 }).notNull(), // AI response to the user's answer (correctness, recommendations, etc.)
+  review: varchar('review', { length: 2040 }).notNull(), // AI response to the user's answer (correctness, recommendations, etc.)
   controlQuestion: varchar('controlQuestion', { length: 255 }).notNull(), // Control question for ending lesson for user
   done: boolean().default(false).notNull(),
   content: text('content'),

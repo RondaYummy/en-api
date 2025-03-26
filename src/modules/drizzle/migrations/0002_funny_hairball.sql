@@ -1,0 +1,1 @@
+ALTER TABLE "lessons" ALTER COLUMN "review" SET DATA TYPE varchar(2040);

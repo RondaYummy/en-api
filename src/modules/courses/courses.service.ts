@@ -3,6 +3,7 @@ import { CreateApiCourseDto, CreateCourseDto } from './dto/create-course.dto';
 import { OpenAiService } from '../open-ai/open-ai.service';
 import { CoursesRepository } from './courses.repository';
 import { computeScheduledDate } from 'src/utils/date.utils';
+import { AnswerLessonDto } from './dto/answer-question.dto';
 
 export interface Lesson {
   plan: string;
@@ -56,19 +57,20 @@ export class CoursesService {
     return await this.coursesRepository.findLessonsByCourse(courseId, userId);
   }
 
-  async answerLessonQuestion(courseId: string, userId: string, lessonId: string) {
-    const course = await this.coursesRepository.findCourse(userId, courseId);
-    const lessons = await this.coursesRepository.findLessonsByCourse(courseId, userId);
-    console.log(course, 'course');
-    console.log(lessons, 'lessons');
+  async answerLessonQuestion(userId: string, lessonId: string, body: AnswerLessonDto) {
+    const lesson = await this.coursesRepository.findLessonById(lessonId, userId);
+    const reviewAi = await this.openAiService.answerLessonQuestion(lesson.plan, lesson.controlQuestion, body.answer);
+    lesson.review = reviewAi.review;
+    lesson.done = true;
+    const lessonUpdated = await this.coursesRepository.updateLesson(lessonId, lesson, userId);
+    return lessonUpdated;
   }
 
-  async createLessonContent(courseId: string, userId: string, lessonId: string) {
+  async createLessonContent(userId: string, lessonId: string) {
     let lesson = await this.coursesRepository.findLessonById(lessonId, userId);
     const content = await this.openAiService.createLessonContent(lesson.plan, lesson.controlQuestion);
     lesson.content = content.lessonContent;
     const lessonUpdated = await this.coursesRepository.updateLesson(lessonId, lesson, userId);
-    console.log(lessonUpdated, 'lessonUpdated');
-    return await this.coursesRepository.findLessonById(lessonId, userId);
+    return lessonUpdated;
   }
 }

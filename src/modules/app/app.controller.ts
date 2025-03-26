@@ -1,6 +1,6 @@
 import { Controller, Get, Header } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { Permissions } from 'src/decorators/session-permissions.decorator';
 import * as os from 'os';
 
@@ -28,6 +28,19 @@ export class AppController {
   @Get('app')
   @Header('Content-Type', 'text/plain')
   @Permissions()
+  @ApiOperation({
+    summary: 'Get application status and system info',
+    description: 'Returns current application status along with system information (e.g., uptime, memory usage, Node version, PID).'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Application information in plain text format',
+  })
+  @ApiHeader({
+    name: 'Content-Type',
+    description: 'Response content type. Will be "text/plain".',
+    example: 'text/plain',
+  })
   app() {
     const port = this.configService.get<number>('PORT');
     const memoryUsage = process.memoryUsage();
