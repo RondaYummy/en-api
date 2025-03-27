@@ -1,8 +1,8 @@
 {
   "name": "en-api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "English Ai",
+  "author": "RondoYummy <basrers@ukr.net>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

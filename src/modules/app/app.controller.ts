@@ -1,7 +1,6 @@
 import { Controller, Get, Header } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiOperation, ApiResponse, ApiHeader, ApiTags } from '@nestjs/swagger';
-import { Permissions } from 'src/decorators/session-permissions.decorator';
 import * as os from 'os';
 
 @ApiTags('App')
@@ -27,7 +26,6 @@ export class AppController {
 
   @Get('app')
   @Header('Content-Type', 'text/plain')
-  @Permissions()
   @ApiOperation({
     summary: 'Get application status and system info',
     description: 'Returns current application status along with system information (e.g., uptime, memory usage, Node version, PID).'

@@ -10,6 +10,17 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));
 
+  app.enableCors({
+    origin: [
+      'http://localhost:9150',
+      'http://localhost:3020',
+      'https://levych.com',
+      process.env.FRONTEND_URL.slice(0, 26),
+      process.env.FRONTEND_DOMAIN,
+      process.env.FRONTEND_URL,
+    ],
+    credentials: true,
+  });
   app.use(cookieParser());
   app.useGlobalPipes(
     new ValidationPipe({
@@ -24,7 +35,7 @@ async function bootstrap() {
 
   useSwagger(app);
 
-  await app.listen(Number(process.env.PORT), '0.0.0.0');
+  await app.listen(Number(process.env.PORT));
   console.log(`🟢 Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

@@ -4,6 +4,10 @@
 $ npm install
 ```
 
+## API Documentation
+
+https://domain.com/api/documentation
+
 ## Compile and run the project
 
 ```bash

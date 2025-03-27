@@ -5,13 +5,19 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
+import { UsersService } from '../users/users.service';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('Authentication')
 @Controller('')
 export class AuthController {
   private readonly logger = new Logger(AuthController.name);
 
-  constructor(private readonly authService: AuthService) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+    private configService: ConfigService,
+  ) { }
 
   @Post('register')
   @ApiOperation({ summary: 'User Registration', description: 'Registers a new user with the provided details.' })
@@ -39,15 +45,23 @@ export class AuthController {
     }
     this.logger.log(`New log in from ip: "${ipAddress}".`, loginUserDto.username);
     this.logger.log(`User-Agent: "${userAgent}".`);
+    const frontendDomain = this.configService.get<string>('FRONTEND_DOMAIN');
     const session = await this.authService.login(loginUserDto, ipAddress, userAgent);
+
+    const twoMonths = 660 * 24 * 60 * 60 * 1000;
+    const days = new Date();
+    days.setDate(days.getMonth() + 12);
+
     res.cookie('session_token', session.session_token, {
       httpOnly: true,
+      domain: frontendDomain,
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax', // or 'strict'
-      // maxAge: 
-      // expires: 
+      maxAge: twoMonths, // 60 днів
+      // expires: days,
+      path: '/',
     });
 
-    return { message: 'Login successful!' };
+    return await this.usersService.find({ userId: session.user_id });
   }
 }

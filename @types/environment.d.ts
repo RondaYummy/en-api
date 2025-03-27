@@ -16,6 +16,8 @@ declare global {
       // Application
       PORT: string;
       OPENAI_API_KEY: string;
+      FRONTEND_DOMAIN: string;
+      FRONTEND_URL: string;
     }
   }
 }
