@@ -35,12 +35,12 @@ export class CoursesRepository {
       .where(and(eq(lessons.course_id, courseId), eq(lessons.user_id, userId)));
     return result;
   }
-
-  async findCoursesWithLessons(userId: string) {
+  
+  async findActiveCourses(userId: string) {
     const coursesData = await this.db
       .select()
       .from(courses)
-      .where(eq(courses.user_id, userId));
+      .where(and(eq(courses.user_id, userId), eq(courses.status, 'active')));
 
     const coursesWithLessons = await Promise.all(
       coursesData.map(async (course) => {
@@ -55,7 +55,26 @@ export class CoursesRepository {
     return coursesWithLessons;
   }
 
-  async updateCours(userId: string, updateUserDto: UpdateCourseDto) {
+  async findCompletedCourses(userId: string) {
+    const coursesData = await this.db
+      .select()
+      .from(courses)
+      .where(and(eq(courses.user_id, userId), eq(courses.status, 'completed')));
+
+    const coursesWithLessons = await Promise.all(
+      coursesData.map(async (course) => {
+        const courseLessons = await this.db
+          .select()
+          .from(lessons)
+          .where(eq(lessons.course_id, course.id));
+        return { ...course, lessons: courseLessons };
+      })
+    );
+
+    return coursesWithLessons;
+  }
+
+  async updateCourse(userId: string, updateUserDto: UpdateCourseDto) {
     await this.db
       .update(courses)
       .set(updateUserDto)

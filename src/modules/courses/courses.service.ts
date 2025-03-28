@@ -45,8 +45,12 @@ export class CoursesService {
     return await this.coursesRepository.createCourse(createCourseDto);
   }
 
-  async findCoursesWithLessons(userId: string) {
-    return await this.coursesRepository.findCoursesWithLessons(userId);
+  async findActiveCourses(userId: string) {
+    return await this.coursesRepository.findActiveCourses(userId);
+  }
+
+  async findCompletedCourses(userId: string) {
+    return await this.coursesRepository.findCompletedCourses(userId);
   }
 
   async getUserCourseLessons(userId: string) {

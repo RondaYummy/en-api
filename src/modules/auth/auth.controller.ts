@@ -7,6 +7,8 @@ import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
 import { UsersService } from '../users/users.service';
 import { ConfigService } from '@nestjs/config';
+import { Permissions } from 'src/decorators/session-permissions.decorator';
+import { UserId } from 'src/decorators/user-id.decorator';
 
 @ApiTags('Authentication')
 @Controller('')
@@ -47,6 +49,9 @@ export class AuthController {
     this.logger.log(`User-Agent: "${userAgent}".`);
     const frontendDomain = this.configService.get<string>('FRONTEND_DOMAIN');
     const session = await this.authService.login(loginUserDto, ipAddress, userAgent);
+    if (!session) {
+      return;
+    }
 
     const twoMonths = 660 * 24 * 60 * 60 * 1000;
     const days = new Date();
@@ -57,11 +62,20 @@ export class AuthController {
       domain: frontendDomain,
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: twoMonths, // 60 днів
+      maxAge: twoMonths, // 60 days
       // expires: days,
       path: '/',
     });
 
     return await this.usersService.find({ userId: session.user_id });
+  }
+
+  @Post('logout')
+  @ApiOperation({ summary: 'Logout User', description: 'Logs out the authenticated user by invalidating their session.' })
+  @ApiResponse({ status: 200, description: 'Logout successful.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized. User is not authenticated.' })
+  @Permissions()
+  async logout(@UserId() userId: string) {
+    return await this.authService.logout(userId);
   }
 }

@@ -42,11 +42,11 @@ export class UserSessionsRepository {
     return result[0] || null;
   }
 
-  async deactivateSession(sessionToken: string): Promise<UserSessionDto | null> {
+  async deactivateSession(userId: string): Promise<UserSessionDto | null> {
     const [updatedSession] = await this.db
       .update(userSessions)
       .set({ is_active: false })
-      .where(eq(userSessions.session_token, sessionToken))
+      .where(eq(userSessions.user_id, userId))
       .returning();
     return updatedSession || null;
   }
