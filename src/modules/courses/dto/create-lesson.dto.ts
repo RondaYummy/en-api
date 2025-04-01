@@ -12,7 +12,7 @@ export class CreateLessonDto {
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(64)
+  @MaxLength(128)
   title: string;
 
   @IsNumber()
@@ -21,22 +21,27 @@ export class CreateLessonDto {
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(510)
+  @MaxLength(8160)
   plan: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(510)
+  @MaxLength(8160)
   answer: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(510)
+  @MaxLength(8160)
+  homework: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(8160)
   review: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
+  @MaxLength(512)
   controlQuestion: string;
 
   @Type(() => Date)

@@ -25,8 +25,16 @@ export class CoursesController {
   @Permissions()
   @ApiOperation({ summary: 'Get user course', description: 'Retrieves the courses (with lessons) for the authenticated user.' })
   @ApiResponse({ status: 200, description: 'Course data retrieved successfully.' })
-  async getUserCourse(@UserId() userId: string) {
+  async getUserCourses(@UserId() userId: string) {
     return await this.coursesService.findActiveCourses(userId);
+  }
+
+  @Get('/:courseId')
+  @Permissions()
+  @ApiOperation({ summary: 'Get user course', description: 'Retrieves the course (with lessons) for the authenticated user.' })
+  @ApiResponse({ status: 200, description: 'Course data retrieved successfully.' })
+  async getUserCourse(@UserId() userId: string, @Param('courseId', ParseUUIDPipe) courseId: string) {
+    return await this.coursesService.getUserCourse(userId, courseId);
   }
 
   @Get('/completed')

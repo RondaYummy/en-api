@@ -1,5 +1,5 @@
 {
-  "id": "5ba75f10-890f-4a7e-803f-54a406cf419d",
+  "id": "ba3387a8-264f-4981-a6e7-f8763663af91",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -83,13 +83,6 @@
           "columns": [
             "session_token"
           ]
-        },
-        "user_sessions_ip_address_unique": {
-          "name": "user_sessions_ip_address_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "ip_address"
-          ]
         }
       },
       "policies": {},
@@ -113,6 +106,13 @@
           "primaryKey": false,
           "notNull": true
         },
+        "month": {
+          "name": "month",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 3
+        },
         "title": {
           "name": "title",
           "type": "varchar(64)",
@@ -121,7 +121,7 @@
         },
         "description": {
           "name": "description",
-          "type": "varchar(512)",
+          "type": "varchar(2040)",
           "primaryKey": false,
           "notNull": true
         },
@@ -136,7 +136,8 @@
           "name": "status",
           "type": "varchar(32)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'active'"
         },
         "user_lang": {
           "name": "user_lang",
@@ -196,13 +197,13 @@
         },
         "title": {
           "name": "title",
-          "type": "varchar(64)",
+          "type": "varchar(128)",
           "primaryKey": false,
           "notNull": true
         },
         "plan": {
           "name": "plan",
-          "type": "varchar(510)",
+          "type": "varchar(8160)",
           "primaryKey": false,
           "notNull": true
         },
@@ -214,19 +215,25 @@
         },
         "answer": {
           "name": "answer",
-          "type": "varchar(510)",
+          "type": "varchar(8160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "homework": {
+          "name": "homework",
+          "type": "varchar(8160)",
           "primaryKey": false,
           "notNull": true
         },
         "review": {
           "name": "review",
-          "type": "varchar(510)",
+          "type": "varchar(8160)",
           "primaryKey": false,
           "notNull": true
         },
         "controlQuestion": {
           "name": "controlQuestion",
-          "type": "varchar(255)",
+          "type": "varchar(512)",
           "primaryKey": false,
           "notNull": true
         },
@@ -236,6 +243,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": false
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

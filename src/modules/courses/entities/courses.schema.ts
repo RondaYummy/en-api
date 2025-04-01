@@ -3,8 +3,9 @@ import { pgTable, uuid, timestamp, varchar, integer } from 'drizzle-orm/pg-core'
 export const courses = pgTable('courses', {
   id: uuid('id').defaultRandom().primaryKey(),
   user_id: uuid('user_id').notNull(),
+  month: integer('month').default(3).notNull(),
   title: varchar('title', { length: 64 }).notNull(),
-  description: varchar('description', { length: 512 }).notNull(),
+  description: varchar('description', { length: 2040 }).notNull(),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   status: varchar('status', { length: 32 }).default('active').notNull(), // Course status (active, completed, draft, etc.)
   user_lang: varchar('user_lang', { length: 32 }).notNull(), // User language (for example, “en”, “uk”)

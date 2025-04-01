@@ -9,17 +9,17 @@ CREATE TABLE "user_sessions" (
 	"updated_at" timestamp with time zone,
 	"expires_at" timestamp with time zone,
 	"permissions" text[] DEFAULT '{}'::text[] NOT NULL,
-	CONSTRAINT "user_sessions_session_token_unique" UNIQUE("session_token"),
-	CONSTRAINT "user_sessions_ip_address_unique" UNIQUE("ip_address")
+	CONSTRAINT "user_sessions_session_token_unique" UNIQUE("session_token")
 );
 --> statement-breakpoint
 CREATE TABLE "courses" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid NOT NULL,
+	"month" integer DEFAULT 3 NOT NULL,
 	"title" varchar(64) NOT NULL,
-	"description" varchar(512) NOT NULL,
+	"description" varchar(2040) NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-	"status" varchar(32) NOT NULL,
+	"status" varchar(32) DEFAULT 'active' NOT NULL,
 	"user_lang" varchar(32) NOT NULL,
 	"lang" varchar(32) NOT NULL,
 	"level" varchar(32) NOT NULL,
@@ -30,13 +30,15 @@ CREATE TABLE "lessons" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"user_id" uuid NOT NULL,
 	"course_id" uuid NOT NULL,
-	"title" varchar(64) NOT NULL,
-	"plan" varchar(510) NOT NULL,
+	"title" varchar(128) NOT NULL,
+	"plan" varchar(8160) NOT NULL,
 	"lesson_number" integer NOT NULL,
-	"answer" varchar(510) NOT NULL,
-	"review" varchar(510) NOT NULL,
-	"controlQuestion" varchar(255) NOT NULL,
+	"answer" varchar(8160) NOT NULL,
+	"homework" varchar(8160) NOT NULL,
+	"review" varchar(8160) NOT NULL,
+	"controlQuestion" varchar(512) NOT NULL,
 	"done" boolean DEFAULT false NOT NULL,
+	"content" text,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"scheduled_date" timestamp with time zone NOT NULL
 );

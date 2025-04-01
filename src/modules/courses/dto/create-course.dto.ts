@@ -1,5 +1,6 @@
 import { OmitType, ApiProperty } from '@nestjs/swagger';
 import { IsString, IsArray, ArrayNotEmpty, IsNumber, Min, Max } from 'class-validator';
+import { Lesson } from '../courses.service';
 
 export class CreateCourseDto {
   @ApiProperty({ description: 'User identifier', example: 'd6a9b123-4c5d-6789-abcdef012345' })
@@ -30,6 +31,10 @@ export class CreateCourseDto {
   @IsString()
   level: string;
 
+  @ApiProperty({ description: 'Lessons for course' })
+  @IsArray()
+  lessons: Array<Lesson>;
+
   @ApiProperty({ description: 'Array of available days of the week (0 = Sunday, 6 = Saturday)', example: [1, 3, 5] })
   @IsArray()
   @ArrayNotEmpty()
@@ -43,4 +48,4 @@ export class CreateCourseDto {
   month: number;
 }
 
-export class CreateApiCourseDto extends OmitType(CreateCourseDto, ['title', 'status', 'description'] as const) { }
+export class CreateApiCourseDto extends OmitType(CreateCourseDto, ['title', 'status', 'description', 'lessons'] as const) { }
