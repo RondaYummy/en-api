@@ -65,6 +65,7 @@ export class CoursesService {
       course.level,
     );
     lesson.review = reviewAi.review;
+    lesson.answer = body.answer;
     lesson.done = true;
     const lessonUpdated = await this.coursesRepository.updateLesson(lessonId, lesson, userId);
     return lessonUpdated;

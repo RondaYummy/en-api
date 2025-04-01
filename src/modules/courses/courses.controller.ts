@@ -53,7 +53,7 @@ export class CoursesController {
     return await this.coursesService.findLessonsByCourse(courseId, userId);
   }
 
-  @Post('/:courseId/lessons/:lessonId')
+  @Post('/:courseId/lessons/:lessonId/answer')
   @Permissions()
   @ApiOperation({ summary: 'Answer lesson control question', description: 'Submits the student’s answer to a lesson’s control question and returns an evaluation.' })
   @ApiResponse({ status: 200, description: 'Lesson answer processed successfully.' })

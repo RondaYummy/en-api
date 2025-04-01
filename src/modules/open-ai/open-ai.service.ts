@@ -190,7 +190,15 @@ The lesson must be appropriate for the student's current level (${level}):
 - If intermediate (B1–B2), explanations and activities should be more challenging and rich in real-life context.
 - If advanced (C1–C2), focus on nuance, fluency, and complex linguistic structures.
 
-The lesson should be **comprehensive enough to engage the student for approximately 45–60 minutes**. It must contain sufficient material, exercises, and interactive elements to cover that amount of time meaningfully.
+The lesson should be **comprehensive enough to keep the student engaged for 45–60 minutes of active learning**. Avoid generic filler content or unnecessary repetition. Focus on clarity, usefulness, and practical application.
+
+The lesson must include enough examples, explanations, and exercises to fully develop the topic.
+
+Important:
+- Use clear line breaks (\\n) to structure the content into well-labeled sections:
+  - "Introduction", "Explanation", "Examples", "Interactive tasks", "Summary"
+- Your response should be long and detailed enough to fully cover a 45–60 minute learning session.
+- Do not summarize. Avoid short answers. Use at least 1200 words in "lessonContent" to give the student plenty of material to engage with.
 
 At the end of the lesson, the student must be able to confidently answer the following control question:
 "${controlQuestion}"
@@ -204,10 +212,10 @@ The lesson should:
 - Include **the exact same control question** at the end to assess comprehension.
 - Use a light touch of humor (max one or two small jokes) to keep the tone friendly but focused.
 
-Output a JSON object in the following format (do not include any markdown, code blocks, or extra text):
+Output a JSON object in the following format (do not include any markdown formatting, code blocks, comments, or extra text):
 {
   "lessonTitle": "string",          // Title of the lesson in nativeLanguage
-  "lessonContent": "string",        // Full structured lesson content with explanations, examples, and interactive elements
+  "lessonContent": "string",        // Full structured lesson content with \\n line breaks for clarity
   "homework": "string",             // A simple, relevant homework task in nativeLanguage
   "controlQuestion": "string"       // The same controlQuestion repeated at the end
 }
@@ -224,9 +232,9 @@ Ensure the response is a valid JSON object and includes only the lesson.
     ];
 
     const response = await this.openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o',
       messages,
-      max_tokens: 3500,
+      // max_tokens: 3500,
     });
 
     const lessonContent = response.choices[0]?.message?.content;
@@ -288,9 +296,9 @@ Use an encouraging and motivating tone. The student should feel supported and un
     ];
 
     const response = await this.openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o',
       messages,
-      max_tokens: 3500,
+      // max_tokens: 3500,
     });
 
     const lessonReview = response.choices[0]?.message?.content;

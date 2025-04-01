@@ -8,6 +8,6 @@ export class AnswerLessonDto {
   })
   @IsString()
   @IsNotEmpty()
-  @MaxLength(510)
+  @MaxLength(8160)
   answer: string;
 }
