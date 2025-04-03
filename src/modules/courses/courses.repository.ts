@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, or } from 'drizzle-orm';
 import { Drizzle, InjectDrizzle } from '../drizzle/drizzle.module';
 import { courses } from './entities/courses.schema';
 import { lessons } from './entities/lesson.schema';
@@ -27,7 +27,7 @@ export class CoursesRepository {
           created_at: new Date(),
           user_lang: course.user_lang,
           available_days: course.available_days,
-          status: 'active'
+          status: 'active',
         })
         .returning();
 
@@ -97,7 +97,7 @@ export class CoursesRepository {
     const coursesData = await this.db
       .select()
       .from(courses)
-      .where(and(eq(courses.user_id, userId), eq(courses.status, 'completed')));
+      .where(and(eq(courses.user_id, userId), or(eq(courses.status, 'completed'), eq(courses.status, 'cancelled'))));
 
     const coursesWithLessons = await Promise.all(
       coursesData.map(async (course) => {
@@ -112,6 +112,15 @@ export class CoursesRepository {
   async updateCourse(userId: string, updateUserDto: UpdateCourseDto) {
     await this.db.update(courses).set(updateUserDto).where(eq(courses.user_id, userId));
     return this.findCourses(userId);
+  }
+
+  async cancelCourse(courseId: string) {
+    return await this.db
+      .update(courses)
+      .set({
+        status: 'cancelled',
+      })
+      .where(eq(courses.id, courseId));
   }
 
   async createLesson(createLessonDto: CreateLessonDto) {

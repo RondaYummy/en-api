@@ -256,39 +256,35 @@ Ensure the response is a valid JSON object and includes only the lesson.
     const prompt = `
 You are an expert educator specialized in evaluating student performance in language learning.
 
-Below is the lesson plan, a control question, and a student's answer.
+Below is the lesson plan, a control question, and a student's answer. The student is learning "${targetLanguage}" and their current level is "${level}" (based on the CEFR scale). Their native language is "${nativeLanguage}".
 
-The student is learning "${targetLanguage}" and their current level is "${level}" (according to the CEFR scale).
-Their native language is "${nativeLanguage}".
-
-The student’s answer may be written in either "${nativeLanguage}" or "${targetLanguage}". Take this into account when evaluating.
-
-Your evaluation must be:
-- Primarily written in "${nativeLanguage}" to ensure full understanding.
-- Include relevant examples or corrections using "${targetLanguage}" where appropriate (e.g., showing improved phrases or corrected sentences).
-- Adapted to the student's level: for lower levels (A1–A2), use simpler explanations and avoid complex linguistic terms.
-
-Evaluate the student's answer with a thoughtful, kind, and helpful review that includes:
-
-Evaluation:
-- Analyze the answer’s correctness and completeness based on the lesson and control question.
-- Mention what the student did well.
-
-Language Feedback:
-- Evaluate grammar, vocabulary, and structure (only if the answer is in "${targetLanguage}").
-- Keep feedback level-appropriate (${level}) and show corrections in "${targetLanguage}" with short explanations in "${nativeLanguage}".
-
-Recommendations:
-- Provide clear, actionable tips to improve (if needed), using a supportive and motivating tone.
-
-Grade:
-- Give a fair letter grade (A, B, C, D, F) with a short explanation why.
-
-Use line breaks (\\n) to separate sections clearly, and keep the tone warm, encouraging, and focused on progress.
+The student’s answer may be written in either their native language ("${nativeLanguage}") or the target language ("${targetLanguage}"). Consider this when evaluating the response.
 
 Lesson Plan: ${plan}
 Control Question: ${controlQuestion}
 Student's Answer: ${answer}
+
+Evaluate the student's answer with a thoughtful and supportive review that includes:
+- An assessment of the correctness and completeness of the answer, based on the lesson plan and the control question.
+- A short evaluation of the language used: grammar, vocabulary, and structure — appropriate for level ${level}, if applicable.
+- Friendly, constructive recommendations for improvement if needed.
+- A fair grade on the American grading scale (A, B, C, D, F), with a clear explanation of how it was determined.
+
+Output your evaluation as plain text in the following format:
+
+Evaluation:
+[Your detailed evaluation here]
+
+Language Feedback:
+[Grammar, vocabulary, structure — evaluated relative to level if the answer is in ${targetLanguage}]
+
+Recommendations:
+[Actionable tips for improvement, if any]
+
+Grade:
+[Letter grade with explanation]
+
+Use an encouraging and motivating tone. The student should feel supported and understand what they did well, and what can be improved before moving on to the next lesson.
 `;
 
     const messages: ChatCompletionMessageParam[] = [

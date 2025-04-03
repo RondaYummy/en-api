@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateApiCourseDto } from './dto/create-course.dto';
 import { OpenAiService } from '../open-ai/open-ai.service';
 import { CoursesRepository } from './courses.repository';
@@ -89,5 +89,9 @@ export class CoursesService {
     lesson.homework = content.lessonContent?.homework;
     const lessonUpdated = await this.coursesRepository.updateLesson(lessonId, lesson, userId);
     return lessonUpdated;
+  }
+
+  async cancelCourse(courseId: string) {
+    return await this.coursesRepository.cancelCourse(courseId);
   }
 }

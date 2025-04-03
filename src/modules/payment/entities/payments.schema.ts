@@ -7,7 +7,7 @@ export const payments = pgTable('payments', {
   course_id: uuid('course_id').notNull(),
   amount: numeric('amount', { precision: 10, scale: 2 }).notNull(), // For example, 99999999.99
   currency: varchar('currency', { length: 8 }).notNull(), // For example, 'USD', 'UAH'
-  status: varchar('status', { length: 32 }).notNull(), // Status: pending, paid, canceled, refunded, etc.
+  status: varchar('status', { length: 32 }).notNull(), // Status: pending, paid, cancelled, refunded, etc.
   description: text('description'), // Optional - additional information
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
