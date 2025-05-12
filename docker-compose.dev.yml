@@ -31,7 +31,7 @@ services:
       - pgdata_dev:/var/lib/postgresql/data
 
   redis:
-    image: redis:7-alpine
+    image: redis:8-alpine
     container_name: redis_dev
     ports:
       - "6380:6379"

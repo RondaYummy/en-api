@@ -29,7 +29,7 @@ services:
       - pgdata_prod:/var/lib/postgresql/data
 
   redis:
-    image: redis:7-alpine
+    image: redis:8-alpine
     container_name: redis_prod
     restart: always
     ports:
